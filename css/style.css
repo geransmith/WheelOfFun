@@ -1,0 +1,406 @@
+:root {
+    --background-color: #1a1a1a;
+    --secondary-bg: #2d2d2d;
+    --text-color: #ffffff;
+    --error-color: #ff4444;
+    --button-color: #444444;
+    --button-hover: #555555;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.names-container {
+    margin-bottom: 20px;
+}
+
+.name-input {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+input {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    flex: 1;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+.remove-name {
+    padding: 10px 15px;
+    background-color: var(--error-color);
+}
+
+.roll-button {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    padding: 15px;
+    font-size: 1.2em;
+    background-color: #4caf50;
+}
+
+.roll-button:hover {
+    background-color: #45a049;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.result-card {
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    margin: 10px auto;
+    border-radius: 4px;
+    position: relative;
+    max-width: 400px;
+    text-align: center;
+}
+
+.result-card h3 {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.slot-machine {
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--secondary-bg);
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+.slot-item {
+    padding: 8px;
+    text-align: center;
+    font-size: 1em;
+}
+
+.name-entry {
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.name-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.exclusions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.spec-exclusion,
+.role-exclusion {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.multiselect {
+    position: relative;
+}
+
+.selected-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-height: 30px;
+    margin-bottom: 5px;
+}
+
+.spec-pill {
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.spec-pill .remove {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.spec-selector {
+    width: 100%;
+    text-align: left;
+}
+
+.spec-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    border: 1px solid var(--button-color);
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.spec-search {
+    width: 100%;
+    padding: 8px;
+    border-bottom: 1px solid var(--button-color);
+}
+
+.spec-list {
+    padding: 5px;
+}
+
+.spec-option {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.spec-option:hover {
+    background-color: var(--button-hover);
+}
+
+.role-toggles {
+    display: flex;
+    gap: 10px;
+}
+
+.role-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.results-container {
+    margin-top: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-buttons button {
+    flex: 1;
+}
+
+.roll-again {
+    background-color: #4caf50;
+}
+
+.roll-again:hover {
+    background-color: #45a049;
+}
+.advanced-options-toggle {
+    margin: 20px 0;
+}
+
+.toggle-button {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    background-color: var(--secondary-bg);
+}
+
+.toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.toggle-button.active .toggle-icon {
+    transform: rotate(90deg);
+}
+
+.advanced-options {
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.option-row {
+    margin-bottom: 15px;
+}
+
+.option-row:last-child {
+    margin-bottom: 0;
+}
+
+.recommended-comp {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.comp-text {
+    font-style: italic;
+    color: #888;
+}
+
+.exclusions {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--button-color);
+}
+
+.exclusion-summary {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+}
+
+.excluded-spec {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin: 2px;
+    font-size: 0.9em;
+}
+
+.excluded-role {
+    display: inline-block;
+    padding: 2px 6px;
+    background-color: var(--secondary-bg);
+    border-radius: 10px;
+    margin: 2px;
+}
+
+.next-button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background-color: #45a049;
+}
+
+.next-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+.next-roll-container {
+    margin: 20px 0;
+}
+
+.next-roll-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+.next-roll-button:hover {
+    background-color: #45a049;
+}
+
+.next-roll-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.duplicate-warning {
+    color: #ffa500;
+    font-size: 0.9em;
+    margin-top: 5px;
+    font-style: italic;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--background-color);
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8em;
+    border-top: 1px solid var(--secondary-bg);
+    z-index: 1000;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer a {
+    color: var(--text-color);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.footer a:hover {
+    opacity: 1;
+}
+
+/* Add this to ensure content doesn't get hidden behind the footer */
+body {
+    margin-bottom: 40px; /* Adjust based on footer height */
+}

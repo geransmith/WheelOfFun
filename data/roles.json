@@ -1,0 +1,238 @@
+{
+  "specs": [
+    {
+      "class": "Death Knight",
+      "specialization": "Blood",
+      "role": "Tank",
+      "classColor": "#C41F3B"
+    },
+    {
+      "class": "Death Knight",
+      "specialization": "Frost",
+      "role": "DPS",
+      "classColor": "#C41F3B"
+    },
+    {
+      "class": "Death Knight",
+      "specialization": "Unholy",
+      "role": "DPS",
+      "classColor": "#C41F3B"
+    },
+    {
+      "class": "Demon Hunter",
+      "specialization": "Havoc",
+      "role": "DPS",
+      "classColor": "#A330C9"
+    },
+    {
+      "class": "Demon Hunter",
+      "specialization": "Vengeance",
+      "role": "Tank",
+      "classColor": "#A330C9"
+    },
+    {
+      "class": "Druid",
+      "specialization": "Balance",
+      "role": "DPS",
+      "classColor": "#FF7D0A"
+    },
+    {
+      "class": "Druid",
+      "specialization": "Feral",
+      "role": "DPS",
+      "classColor": "#FF7D0A"
+    },
+    {
+      "class": "Druid",
+      "specialization": "Guardian",
+      "role": "Tank",
+      "classColor": "#FF7D0A"
+    },
+    {
+      "class": "Druid",
+      "specialization": "Restoration",
+      "role": "Healer",
+      "classColor": "#FF7D0A"
+    },
+    {
+      "class": "Evoker",
+      "specialization": "Devastation",
+      "role": "DPS",
+      "classColor": "#33937F"
+    },
+    {
+      "class": "Evoker",
+      "specialization": "Preservation",
+      "role": "Healer",
+      "classColor": "#33937F"
+    },
+    {
+      "class": "Evoker",
+      "specialization": "Augmentation",
+      "role": "DPS",
+      "classColor": "#33937F"
+    },
+    {
+      "class": "Hunter",
+      "specialization": "Beast Mastery",
+      "role": "DPS",
+      "classColor": "#ABD473"
+    },
+    {
+      "class": "Hunter",
+      "specialization": "Marksmanship",
+      "role": "DPS",
+      "classColor": "#ABD473"
+    },
+    {
+      "class": "Hunter",
+      "specialization": "Survival",
+      "role": "DPS",
+      "classColor": "#ABD473"
+    },
+    {
+      "class": "Mage",
+      "specialization": "Arcane",
+      "role": "DPS",
+      "classColor": "#69CCF0"
+    },
+    {
+      "class": "Mage",
+      "specialization": "Fire",
+      "role": "DPS",
+      "classColor": "#69CCF0"
+    },
+    {
+      "class": "Mage",
+      "specialization": "Frost",
+      "role": "DPS",
+      "classColor": "#69CCF0"
+    },
+    {
+      "class": "Monk",
+      "specialization": "Brewmaster",
+      "role": "Tank",
+      "classColor": "#00FF96"
+    },
+    {
+      "class": "Monk",
+      "specialization": "Mistweaver",
+      "role": "Healer",
+      "classColor": "#00FF96"
+    },
+    {
+      "class": "Monk",
+      "specialization": "Windwalker",
+      "role": "DPS",
+      "classColor": "#00FF96"
+    },
+    {
+      "class": "Paladin",
+      "specialization": "Holy",
+      "role": "Healer",
+      "classColor": "#F58CBA"
+    },
+    {
+      "class": "Paladin",
+      "specialization": "Protection",
+      "role": "Tank",
+      "classColor": "#F58CBA"
+    },
+    {
+      "class": "Paladin",
+      "specialization": "Retribution",
+      "role": "DPS",
+      "classColor": "#F58CBA"
+    },
+    {
+      "class": "Priest",
+      "specialization": "Discipline",
+      "role": "Healer",
+      "classColor": "#FFFFFF"
+    },
+    {
+      "class": "Priest",
+      "specialization": "Holy",
+      "role": "Healer",
+      "classColor": "#FFFFFF"
+    },
+    {
+      "class": "Priest",
+      "specialization": "Shadow",
+      "role": "DPS",
+      "classColor": "#FFFFFF"
+    },
+    {
+      "class": "Rogue",
+      "specialization": "Assassination",
+      "role": "DPS",
+      "classColor": "#FFF569"
+    },
+    {
+      "class": "Rogue",
+      "specialization": "Outlaw",
+      "role": "DPS",
+      "classColor": "#FFF569"
+    },
+    {
+      "class": "Rogue",
+      "specialization": "Subtlety",
+      "role": "DPS",
+      "classColor": "#FFF569"
+    },
+    {
+      "class": "Shaman",
+      "specialization": "Elemental",
+      "role": "DPS",
+      "classColor": "#0070DE"
+    },
+    {
+      "class": "Shaman",
+      "specialization": "Enhancement",
+      "role": "DPS",
+      "classColor": "#0070DE"
+    },
+    {
+      "class": "Shaman",
+      "specialization": "Restoration",
+      "role": "Healer",
+      "classColor": "#0070DE"
+    },
+    {
+      "class": "Warlock",
+      "specialization": "Affliction",
+      "role": "DPS",
+      "classColor": "#9482C9"
+    },
+    {
+      "class": "Warlock",
+      "specialization": "Demonology",
+      "role": "DPS",
+      "classColor": "#9482C9"
+    },
+    {
+      "class": "Warlock",
+      "specialization": "Destruction",
+      "role": "DPS",
+      "classColor": "#9482C9"
+    },
+    {
+      "class": "Warrior",
+      "specialization": "Arms",
+      "role": "DPS",
+      "classColor": "#C79C6E"
+    },
+    {
+      "class": "Warrior",
+      "specialization": "Fury",
+      "role": "DPS",
+      "classColor": "#C79C6E"
+    },
+    {
+      "class": "Warrior",
+      "specialization": "Protection",
+      "role": "Tank",
+      "classColor": "#C79C6E"
+    }
+  ]
+}

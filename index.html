@@ -1,366 +1,132 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>WoW Role Generator</title>
-    <style>
-        body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #2a2a2a;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        .input-group {
-            margin: 10px 0;
-        }
-        .input-group input[type="text"] {
-            padding: 8px;
-            width: 200px;
-            background-color: #333;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .result {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #333;
-            border-radius: 4px;
-        }
-        .error {
-            color: #ff4444;
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: rgba(255,68,68,0.1);
-            border-radius: 4px;
-        }
-        #wheelContainer {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-        canvas {
-            border: 2px solid #444;
-            border-radius: 50%;
-            background-color: #222;
-        }
-        #currentSpinName {
-            font-size: 1.2em;
-            margin: 10px 0;
-            font-weight: bold;
-            color: #fff;
-        }
-        button {
-            background-color: #444;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #555;
-        }
-        button:disabled {
-            background-color: #333;
-            cursor: not-allowed;
-        }
-        .input-group label {
-            margin-left: 10px;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <form id="nameForm">
-            <div class="input-group">
-                <input type="text" placeholder="Name 1" id="name1" required>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WoW Spec Randomizer</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>WoW Spec Randomizer</h1>
+
+            <div class="names-container">
+                <div class="name-entry">
+                    <div class="name-input-row">
+                        <input
+                            type="text"
+                            placeholder="Enter player name"
+                            class="player-name"
+                        />
+                        <button class="remove-name" style="display: none">
+                            ×
+                        </button>
+                    </div>
+                    <div class="exclusions hidden">
+                        <div class="spec-exclusion">
+                            <label>Exclude specs:</label>
+                            <div class="multiselect">
+                                <div class="selected-specs"></div>
+                                <button class="spec-selector">
+                                    Select specs to exclude
+                                </button>
+                                <div class="spec-dropdown hidden">
+                                    <input
+                                        type="text"
+                                        placeholder="Search specs..."
+                                        class="spec-search"
+                                    />
+                                    <div class="spec-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role-exclusion">
+                            <label>Exclude roles:</label>
+                            <div class="role-toggles">
+                                <label class="role-toggle">
+                                    <input type="checkbox" value="Tank" /> Tank
+                                </label>
+                                <label class="role-toggle">
+                                    <input type="checkbox" value="Healer" />
+                                    Healer
+                                </label>
+                                <label class="role-toggle">
+                                    <input type="checkbox" value="DPS" /> DPS
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-                <input type="text" placeholder="Name 2" id="name2">
+
+            <button class="add-name">Add Another Player</button>
+
+            <div class="advanced-options-toggle">
+                <button class="toggle-button">
+                    <span class="toggle-icon">▶</span> Advanced Options
+                </button>
             </div>
-            <div class="input-group">
-                <input type="text" placeholder="Name 3" id="name3">
+
+            <div class="advanced-options hidden">
+                <div class="option-row">
+                    <label>
+                        <input type="checkbox" id="auto-progress" checked />
+                        Auto-progress animations
+                    </label>
+                </div>
+
+                <div class="option-row">
+                    <div class="recommended-comp">
+                        <label>Recommended Composition:</label>
+                        <span class="comp-text"></span>
+                    </div>
+                </div>
+
+                <div class="option-row">
+                    <label>
+                        <input type="checkbox" id="balanced-team" disabled />
+                        Generate balanced team
+                    </label>
+                </div>
+
+                <div class="option-row">
+                    <label>
+                        <input type="checkbox" id="allow-exclusions" />
+                        Allow exclusions
+                    </label>
+                </div>
+                <div class="option-row">
+                    <label>
+                        <input type="checkbox" id="allow-duplicates" checked />
+                        Allow Duplicate Specs
+                    </label>
+                    <div class="duplicate-warning hidden">
+                        Warning: Disabling duplicates with many players could
+                        limit variety
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-                <input type="text" placeholder="Name 4" id="name4">
+
+            <button class="roll-button">Roll Specs!</button>
+
+            <div class="results-container"></div>
+            <div class="next-roll-container" style="display: none">
+                <button class="next-roll-button">Next Roll</button>
             </div>
-            <div class="input-group">
-                <input type="text" placeholder="Name 5" id="name5">
+            <div class="action-buttons" style="display: none">
+                <button class="roll-again">Roll Again</button>
+                <button class="reset">Reset All</button>
             </div>
-            <div class="input-group">
-                <input type="checkbox" id="balancedTeam">
-                <label for="balancedTeam">Balanced Team (Requires 5 names)</label>
-            </div>
-            <button type="submit">Generate Roles</button>
-        </form>
-        <div id="error" class="error"></div>
-        <div id="wheelContainer">
-            <div id="currentSpinName"></div>
-            <canvas id="wheel" width="400" height="400"></canvas>
         </div>
-        <div id="results"></div>
-    </div>
-
-    <script>
-        let roleData = null;
-
-        // Function to load the JSON data
-        async function loadRoleData() {
-            try {
-                const response = await fetch('roles.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                roleData = await response.json();
-                document.getElementById('nameForm').querySelector('button').disabled = false;
-            } catch (error) {
-                console.error('Error loading role data:', error);
-                document.getElementById('error').textContent = 'Error loading role data. Please refresh the page.';
-                document.getElementById('error').style.display = 'block';
-            }
-        }
-
-        class WheelSpinner {
-            constructor(canvasId) {
-                this.canvas = document.getElementById(canvasId);
-                this.ctx = this.canvas.getContext('2d');
-                this.radius = this.canvas.width / 2;
-                this.center = this.radius;
-                this.isSpinning = false;
-                this.currentRotation = 0;
-                this.spinSpeed = 0;
-                this.targetRotation = 0;
-                this.roles = [];
-                this.selectedRole = null;
-                this.onComplete = null;
-            }
-
-            drawWheel(roles) {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                const sliceAngle = (2 * Math.PI) / roles.length;
-
-                roles.forEach((role, i) => {
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(this.center, this.center);
-                    this.ctx.arc(this.center, this.center, this.radius, 
-                        i * sliceAngle + this.currentRotation, 
-                        (i + 1) * sliceAngle + this.currentRotation);
-                    this.ctx.closePath();
-
-                    // Use the role color from the JSON
-                    this.ctx.fillStyle = role.roleColor;
-                    this.ctx.fill();
-
-                    // Add a slight border between sections
-                    this.ctx.strokeStyle = '#333333';
-                    this.ctx.lineWidth = 1;
-                    this.ctx.stroke();
-
-                    // Draw text
-                    this.ctx.save();
-                    this.ctx.translate(this.center, this.center);
-                    this.ctx.rotate(i * sliceAngle + sliceAngle/2 + this.currentRotation);
-                    this.ctx.textAlign = "right";
-
-                    // Adjust text color based on background brightness
-                    const color = role.roleColor;
-                    const r = parseInt(color.substr(1,2), 16);
-                    const g = parseInt(color.substr(3,2), 16);
-                    const b = parseInt(color.substr(5,2), 16);
-                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                    this.ctx.fillStyle = brightness > 128 ? '#000000' : '#FFFFFF';
-
-                    // Split the class text into multiple lines
-                    const className = role.class;
-                    const parts = className.split(' - ');
-                    this.ctx.font = "bold 14px Arial";
-
-                    // Draw class name in two lines
-                    if (parts.length > 1) {
-                        this.ctx.fillText(parts[1], this.radius - 20, 5); // Spec name
-                        this.ctx.font = "12px Arial";
-                        this.ctx.fillText(parts[0], this.radius - 20, -10); // Class name
-                    } else {
-                        this.ctx.fillText(className, this.radius - 20, 5);
-                    }
-
-                    this.ctx.restore();
-                });
-
-                // Draw center circle
-                this.ctx.beginPath();
-                this.ctx.arc(this.center, this.center, 20, 0, 2 * Math.PI);
-                this.ctx.fillStyle = '#333';
-                this.ctx.fill();
-            }
-
-            spin(roles, targetRole) {
-                if (this.isSpinning) {
-                    this.stopSpinning();
-                    return;
-                }
-
-                this.roles = roles;
-                this.selectedRole = targetRole;
-                this.isSpinning = true;
-                this.spinSpeed = 0.5;
-
-                // Calculate target rotation
-                const roleIndex = roles.findIndex(r => r.class === targetRole.class);
-                const sliceAngle = (2 * Math.PI) / roles.length;
-                this.targetRotation = -(roleIndex * sliceAngle + sliceAngle/2) + Math.PI/2;
-                this.targetRotation += Math.PI * 8; // Add extra rotations
-
-                this.animate();
-            }
-
-            animate() {
-                if (!this.isSpinning) return;
-
-                this.currentRotation += this.spinSpeed;
-                this.spinSpeed *= 0.99; // Gradually slow down
-
-                const distanceToTarget = (this.targetRotation - this.currentRotation) % (2 * Math.PI);
-
-                if (this.spinSpeed < 0.01 && Math.abs(distanceToTarget) < 0.01) {
-                    this.isSpinning = false;
-                    if (this.onComplete) this.onComplete(this.selectedRole);
-                    return;
-                }
-
-                this.drawWheel(this.roles);
-                requestAnimationFrame(() => this.animate());
-            }
-
-            stopSpinning() {
-                this.isSpinning = false;
-                if (this.onComplete) this.onComplete(this.selectedRole);
-            }
-        }
-
-        const wheel = new WheelSpinner('wheel');
-        let currentAssignments = [];
-        let currentNames = [];
-        let currentNameIndex = 0;
-
-        function getRandomItem(array) {
-            return array[Math.floor(Math.random() * array.length)];
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function spinForNextName() {
-            if (currentNameIndex >= currentNames.length) {
-                document.getElementById('wheelContainer').style.display = 'none';
-                displayFinalResults();
-                return;
-            }
-
-            const currentName = currentNames[currentNameIndex];
-            document.getElementById('currentSpinName').textContent = `Spinning for: ${currentName}`;
-
-            let availableRoles = currentAssignments[currentNameIndex];
-            wheel.onComplete = (role) => {
-                setTimeout(() => {
-                    currentNameIndex++;
-                    spinForNextName();
-                }, 500);
-            };
-
-            wheel.spin([...roleData.roles], availableRoles);
-        }
-
-        function displayFinalResults() {
-            const results = document.getElementById('results');
-            results.innerHTML = currentNames.map((name, index) => 
-                `<div class="result" style="border-left: 4px solid ${currentAssignments[index].roleColor}">
-                    ${name}: ${currentAssignments[index].class} (${currentAssignments[index].category})
-                </div>`
-            ).join('');
-        }
-
-        document.getElementById('nameForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            if (!roleData) {
-                document.getElementById('error').textContent = 'Role data not loaded yet. Please try again.';
-                document.getElementById('error').style.display = 'block';
-                return;
-            }
-
-            currentNames = [];
-            const results = document.getElementById('results');
-            const error = document.getElementById('error');
-            const balancedTeam = document.getElementById('balancedTeam').checked;
-
-            // Collect non-empty names
-            for (let i = 1; i <= 5; i++) {
-                const name = document.getElementById(`name${i}`).value.trim();
-                if (name) currentNames.push(name);
-            }
-
-            // Validation
-            if (currentNames.length === 0) {
-                error.textContent = "Please enter at least one name.";
-                error.style.display = "block";
-                return;
-            }
-
-            if (balancedTeam && currentNames.length !== 5) {
-                error.textContent = "Balanced team requires exactly 5 names.";
-                error.style.display = "block";
-                return;
-            }
-
-            error.style.display = "none";
-            results.innerHTML = '';
-
-            if (balancedTeam) {
-                const tanks = roleData.roles.filter(role => role.category === "tank");
-                const healers = roleData.roles.filter(role => role.category === "healer");
-                const dps = shuffleArray(roleData.roles.filter(role => role.category === "DPS")).slice(0, 3);
-                currentAssignments = [getRandomItem(tanks), getRandomItem(healers), ...dps];
-                shuffleArray(currentAssignments);
-            } else {
-                const availableRoles = [...roleData.roles];
-                currentAssignments = currentNames.map(() => {
-                    const index = Math.floor(Math.random() * availableRoles.length);
-                    return availableRoles.splice(index, 1)[0];
-                });
-            }
-
-            // Reset and start spinning
-            currentNameIndex = 0;
-            document.getElementById('wheelContainer').style.display = 'block';
-            spinForNextName();
-        });
-
-        // Add click listener to canvas to skip animation
-        document.getElementById('wheel').addEventListener('click', function() {
-            if (wheel.isSpinning) {
-                wheel.stopSpinning();
-            }
-        });
-
-        // Load the role data when the page loads
-        document.getElementById('nameForm').querySelector('button').disabled = true;
-        loadRoleData();
-    </script>
-</body>
+        <script src="js/slotMachine.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <footer class="footer">
+        <div class="footer-content">
+            I'm sorry for making this:
+            <a href="https://github.com/geransmith/WheelOfFun" target="_blank"
+                >View on GitHub</a
+            >
+        </div>
+    </footer>
 </html>
