@@ -544,49 +544,70 @@ document.addEventListener("DOMContentLoaded", async () => {
     addNameButton.disabled = false;
   });
 
-  document.querySelector(".roll-again").addEventListener("click", () => {
-    rollButton.click();
+  document.querySelector('.roll-again').addEventListener('click', () => {
+      // Show input section and buttons but maintain their values
+      namesContainer.classList.remove('hidden');
+      addNameButton.classList.remove('hidden');
+      rollButton.classList.remove('hidden');
+      document.querySelector('.advanced-options-toggle').classList.remove('hidden');
+  
+      // Clear previous results
+      resultsContainer.innerHTML = '';
+      actionButtons.style.display = 'none';
+  
+      // Clear used specs set for new roll
+      usedSpecs.clear();
+  
+      // Don't reset advanced options - keep their current state
+  
+      // Trigger the roll
+      rollButton.click();
   });
 
-  document.querySelector(".reset").addEventListener("click", () => {
-    // Show all sections
-    namesContainer.classList.remove("hidden");
-    addNameButton.classList.remove("hidden");
-    rollButton.classList.remove("hidden");
-    document
-      .querySelector(".advanced-options-toggle")
-      .classList.remove("hidden");
 
-    resultsContainer.innerHTML = "";
-    actionButtons.style.display = "none";
-
-    // Reset to single empty name entry
-    const nameEntries = document.querySelectorAll(".name-entry");
-    nameEntries.forEach((entry, index) => {
-      if (index === 0) {
-        entry.querySelector(".player-name").value = "";
-        entry.querySelector(".selected-specs").innerHTML = "";
-        entry
-          .querySelectorAll(".role-toggle input")
-          .forEach((input) => (input.checked = false));
-      } else {
-        entry.remove();
-      }
-    });
-
-    // Clear used specs set
-    usedSpecs.clear();
-
-    // Reset all advanced options to defaults
-    document.querySelector("#auto-progress").checked = true;
-    document.querySelector("#allow-duplicates").checked = true;
-    document.querySelector("#allow-duplicates").disabled = false;
-    document.querySelector(".duplicate-warning").classList.add("hidden");
-
-    document.querySelector(".remove-name").style.display = "none";
-    document.querySelector(".next-roll-container").style.display = "none";
-    updateRecommendedComposition();
+  document.querySelector('.reset').addEventListener('click', () => {
+      // Show all sections
+      namesContainer.classList.remove('hidden');
+      addNameButton.classList.remove('hidden');
+      rollButton.classList.remove('hidden');
+      document.querySelector('.advanced-options-toggle').classList.remove('hidden');
+  
+      resultsContainer.innerHTML = '';
+      actionButtons.style.display = 'none';
+  
+      // Reset to single empty name entry
+      const nameEntries = document.querySelectorAll('.name-entry');
+      nameEntries.forEach((entry, index) => {
+          if (index === 0) {
+              entry.querySelector('.player-name').value = '';
+              entry.querySelector('.selected-specs').innerHTML = '';
+              entry.querySelectorAll('.role-toggle input').forEach(input => input.checked = false);
+          } else {
+              entry.remove();
+          }
+      });
+  
+      // Clear used specs set
+      usedSpecs.clear();
+  
+      // Reset all advanced options to defaults
+      document.querySelector('#auto-progress').checked = true;
+      document.querySelector('#allow-duplicates').checked = true;
+      document.querySelector('#allow-duplicates').disabled = false;
+      document.querySelector('#balanced-team').checked = false;
+      document.querySelector('#allow-exclusions').checked = false;
+      document.querySelector('.duplicate-warning').classList.add('hidden');
+  
+      // Hide exclusions
+      document.querySelectorAll('.exclusions').forEach(exclusion => {
+          exclusion.classList.add('hidden');
+      });
+  
+      document.querySelector('.remove-name').style.display = 'none';
+      document.querySelector('.next-roll-container').style.display = 'none';
+      updateRecommendedComposition();
   });
+
 
   // Initial setup
   setupAdvancedOptions();
