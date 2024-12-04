@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const resultsContainer = document.querySelector(".results-container");
   const actionButtons = document.querySelector(".action-buttons");
 
+  document.querySelector(".comp-text").textContent = "Group comp can be modified with more than one name";
+
   function createNameEntry() {
     const template = document.querySelector(".name-entry");
     const newEntry = template.cloneNode(true);
