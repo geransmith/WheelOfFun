@@ -75,12 +75,46 @@
             </div>
 
             <div class="group-comp-options">
+                <h2>Group Comp Options</h2>
                 <div class="recommended-comp">
                     <div class="comp-text"></div>
                     <label>
                         <input type="checkbox" id="balanced-team" disabled />
                         Generate balanced team
                     </label>
+                    <label>
+                        <input type="checkbox" id="minimum-roles" disabled />
+                        Specify minimum roles
+                    </label>
+                    <div class="minimum-roles-config hidden">
+                        <div class="role-input">
+                            <label
+                                >Tanks:
+                                <input
+                                    type="number"
+                                    min="0"
+                                    value="0"
+                                    id="min-tanks"
+                            /></label>
+                            <label
+                                >Healers:
+                                <input
+                                    type="number"
+                                    min="0"
+                                    value="0"
+                                    id="min-healers"
+                            /></label>
+                            <label
+                                >DPS:
+                                <input
+                                    type="number"
+                                    min="0"
+                                    value="0"
+                                    id="min-dps"
+                            /></label>
+                        </div>
+                        <div class="roles-summary"></div>
+                    </div>
                 </div>
             </div>
 
@@ -106,7 +140,7 @@
                 <div class="option-row">
                     <label>
                         <input type="checkbox" id="allow-duplicates" checked />
-                        Allow Duplicate Specs
+                        Allow duplicate specs
                     </label>
                     <div class="duplicate-warning hidden"></div>
                 </div>
