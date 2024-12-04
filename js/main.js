@@ -61,26 +61,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     const nameCount = document.querySelectorAll(".name-entry").length;
     const compText = document.querySelector(".comp-text");
     const balancedTeamCheckbox = document.querySelector("#balanced-team");
+    const minimumRolesCheckbox = document.querySelector("#minimum-roles");
+    const minimumRolesConfig = document.querySelector(".minimum-roles-config");
+    const balancedTeamLabel = balancedTeamCheckbox.parentElement;
+    const minimumRolesLabel = minimumRolesCheckbox.parentElement;
 
-    if (nameCount === 5) {
-      compText.textContent = "1 Tank, 1 Healer, 3 DPS";
+    // Reset balanced team checkbox if number of players doesn't meet criteria
+    if (nameCount !== 5 && nameCount < 10) {
+      balancedTeamCheckbox.checked = false;
+      balancedTeamCheckbox.disabled = true;
+      balancedTeamLabel.classList.remove("available");
+    }
+
+    if (nameCount === 1) {
+      compText.textContent =
+        "Group comp can be modified with more than one name";
+      balancedTeamCheckbox.disabled = true;
+      minimumRolesCheckbox.disabled = true;
+      minimumRolesConfig.classList.add("hidden");
+      balancedTeamLabel.classList.remove("available");
+      minimumRolesLabel.classList.remove("available");
+    } else if (nameCount === 5) {
+      compText.textContent = "Balanced Comp: 1 Tank, 1 Healer, 3 DPS";
       balancedTeamCheckbox.disabled = false;
+      minimumRolesCheckbox.disabled = false;
+      balancedTeamLabel.classList.add("available");
+      minimumRolesLabel.classList.add("available");
     } else if (nameCount >= 10) {
       const dpsCount = Math.floor((nameCount - 2) * 0.75);
       const healerCount = Math.max(2, Math.floor(dpsCount / 3));
-      compText.textContent = `2 Tanks, ${healerCount} Healers, ${dpsCount} DPS`;
+      compText.textContent = `Balanced Comp: 2 Tanks, ${healerCount} Healers, ${dpsCount} DPS`;
       balancedTeamCheckbox.disabled = false;
+      minimumRolesCheckbox.disabled = false;
+      balancedTeamLabel.classList.add("available");
+      minimumRolesLabel.classList.add("available");
     } else if (
-      (nameCount >= 1 && nameCount <= 4) ||
+      (nameCount >= 2 && nameCount <= 4) ||
       (nameCount >= 6 && nameCount <= 9)
     ) {
-      compText.textContent = "Only applicable for dungeon and raid size groups";
+      compText.textContent =
+        "Balanced comp available for dungeon (5) and raid (10+) sized groups";
+      minimumRolesCheckbox.disabled = false;
+      minimumRolesLabel.classList.add("available");
       balancedTeamCheckbox.disabled = true;
-      balancedTeamCheckbox.checked = false;
-    } else {
-      compText.textContent = "";
-      balancedTeamCheckbox.disabled = true;
-      balancedTeamCheckbox.checked = false;
+      balancedTeamLabel.classList.remove("available");
     }
 
     // Update duplicate specs warning
@@ -112,6 +136,72 @@ document.addEventListener("DOMContentLoaded", async () => {
       allowDuplicates.disabled = false;
       warningDiv.classList.add("hidden");
     }
+  }
+
+  function setupMinimumRoles() {
+    const minimumRolesCheckbox = document.querySelector("#minimum-roles");
+    const balancedTeamCheckbox = document.querySelector("#balanced-team");
+    const minimumRolesConfig = document.querySelector(".minimum-roles-config");
+    const roleInputs = document.querySelectorAll(".role-input input");
+    const rolesSummary = document.querySelector(".roles-summary");
+
+    minimumRolesCheckbox.addEventListener("change", () => {
+      if (minimumRolesCheckbox.checked) {
+        balancedTeamCheckbox.checked = false;
+        balancedTeamCheckbox.disabled = true;
+        minimumRolesConfig.classList.remove("hidden");
+        updateRolesSummary();
+      } else {
+        balancedTeamCheckbox.disabled = false;
+        minimumRolesConfig.classList.add("hidden");
+        // Reset values when hiding
+        roleInputs.forEach((input) => {
+          input.value = "0";
+        });
+      }
+    });
+
+    balancedTeamCheckbox.addEventListener("change", () => {
+      if (balancedTeamCheckbox.checked) {
+        minimumRolesCheckbox.checked = false;
+        minimumRolesCheckbox.disabled = true;
+        minimumRolesConfig.classList.add("hidden");
+        // Reset values when hiding
+        roleInputs.forEach((input) => {
+          input.value = "0";
+        });
+      } else {
+        minimumRolesCheckbox.disabled = false;
+      }
+    });
+
+    roleInputs.forEach((input) => {
+      input.addEventListener("input", () => {
+        // Ensure non-negative values
+        if (input.value < 0) input.value = 0;
+        updateRolesSummary();
+      });
+    });
+
+    function updateRolesSummary() {
+      const nameCount = document.querySelectorAll(".name-entry").length;
+      const tanks = parseInt(document.querySelector("#min-tanks").value) || 0;
+      const healers =
+        parseInt(document.querySelector("#min-healers").value) || 0;
+      const dps = parseInt(document.querySelector("#min-dps").value) || 0;
+      const total = tanks + healers + dps;
+      const remaining = nameCount - total;
+
+      if (total > nameCount) {
+        rolesSummary.innerHTML = `<span class="error-text">Total roles (${total}) exceeds number of players (${nameCount})</span>`;
+        return false;
+      }
+
+      rolesSummary.textContent = `${remaining} roles will be randomly assigned`;
+      return true;
+    }
+
+    return { updateRolesSummary };
   }
 
   function setupAdvancedOptions() {
@@ -330,6 +420,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const excludedSpecs = getExcludedSpecs(nameEntry);
     const excludedRoles = getExcludedRoles(nameEntry);
     const allowDuplicates = document.querySelector("#allow-duplicates").checked;
+    const minimumRolesEnabled =
+      document.querySelector("#minimum-roles").checked;
 
     let availableSpecs = specs.filter((spec) => {
       const specString = `${spec.class} - ${spec.specialization}`;
@@ -337,7 +429,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       const specExcluded = excludedSpecs.includes(specString);
       const isDuplicate = !allowDuplicates && usedSpecs.has(specString);
 
-      if (targetRoles) {
+      if (minimumRolesEnabled) {
+        const tanks = parseInt(document.querySelector("#min-tanks").value) || 0;
+        const healers =
+          parseInt(document.querySelector("#min-healers").value) || 0;
+        const dps = parseInt(document.querySelector("#min-dps").value) || 0;
+
+        const needTank = currentRoleCount.Tank < tanks;
+        const needHealer = currentRoleCount.Healer < healers;
+        const needDPS = currentRoleCount.DPS < dps;
+
+        if (needTank && spec.role === "Tank")
+          return !roleExcluded && !specExcluded && !isDuplicate;
+        if (needHealer && spec.role === "Healer")
+          return !roleExcluded && !specExcluded && !isDuplicate;
+        if (needDPS && spec.role === "DPS")
+          return !roleExcluded && !specExcluded && !isDuplicate;
+
+        if (
+          (needTank || needHealer || needDPS) &&
+          ((spec.role === "Tank" && !needTank) ||
+            (spec.role === "Healer" && !needHealer) ||
+            (spec.role === "DPS" && !needDPS))
+        ) {
+          return false;
+        }
+      } else if (targetRoles) {
         const roleAvailable =
           currentRoleCount[spec.role] < targetRoles[spec.role];
         return !roleExcluded && !specExcluded && !isDuplicate && roleAvailable;
@@ -424,7 +541,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       resultCard.querySelector(".slot-machine"),
       availableSpecs,
     );
-
     const result = await slotMachine.spin();
 
     if (targetRoles) {
@@ -606,8 +722,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector("#allow-duplicates").checked = true;
     document.querySelector("#allow-duplicates").disabled = false;
     document.querySelector("#balanced-team").checked = false;
+    document.querySelector("#minimum-roles").checked = false;
     document.querySelector("#allow-exclusions").checked = false;
     document.querySelector(".duplicate-warning").classList.add("hidden");
+    document.querySelector(".minimum-roles-config").classList.add("hidden");
+    document.querySelectorAll(".role-input input").forEach((input) => {
+      input.value = "0";
+    });
 
     // Hide exclusions
     document.querySelectorAll(".exclusions").forEach((exclusion) => {
@@ -621,6 +742,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initial setup
   setupAdvancedOptions();
+  setupMinimumRoles();
   setupSpecSelector(document.querySelector(".name-entry"));
   setupRoleToggles(document.querySelector(".name-entry"));
 });

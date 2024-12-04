@@ -88,6 +88,73 @@ button:hover {
     background-color: #45a049;
 }
 
+.minimum-roles-config {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--button-color);
+    pointer-events: auto;
+}
+
+.role-input {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    pointer-events: auto;
+}
+
+.role-input input {
+    width: 60px;
+    padding: 5px 8px;
+    margin-left: 5px;
+    border: 1px solid var(--button-color);
+    border-radius: 4px;
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    cursor: text;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+}
+
+.role-input input:enabled {
+    opacity: 1;
+    cursor: auto;
+    opacity: 1;
+    border-color: #4caf50;
+    box-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+    background-color: var(--secondary-bg);
+}
+
+.role-input input:enabled:hover {
+    border-color: #45a049;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.role-input input:enabled:focus {
+    outline: none;
+    border-color: #45a049;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.role-input input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--button-color);
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.roles-summary {
+    font-style: italic;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.error-text {
+    color: var(--error-color);
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
 .error {
     color: var(--error-color);
     font-size: 0.9em;
@@ -307,15 +374,38 @@ button:hover {
     border-radius: 4px;
 }
 
+.group-comp-options h2 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
 .recommended-comp {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
+.recommended-comp label {
+    opacity: 0.5;
+    pointer-events: none;
+    transition:
+        opacity 0.3s,
+        pointer-events 0.3s;
+}
+
+.recommended-comp label.available {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.recommended-comp label.hidden {
+    display: none;
+}
+
 .comp-text {
     font-style: italic;
     color: #888;
+    margin-bottom: 10px;
 }
 
 .exclusions {
