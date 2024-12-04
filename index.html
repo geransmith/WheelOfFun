@@ -61,6 +61,29 @@
 
             <button class="add-name">Add Another Player</button>
 
+            <button class="roll-button">Roll Specs!</button>
+
+            <div class="results-container"></div>
+
+            <div class="next-roll-container" style="display: none">
+                <button class="next-roll-button">Next Roll</button>
+            </div>
+
+            <div class="action-buttons" style="display: none">
+                <button class="roll-again">Roll Again</button>
+                <button class="reset">Reset All</button>
+            </div>
+
+            <div class="group-comp-options">
+                <div class="recommended-comp">
+                    <div class="comp-text"></div>
+                    <label>
+                        <input type="checkbox" id="balanced-team" disabled />
+                        Generate balanced team
+                    </label>
+                </div>
+            </div>
+
             <div class="advanced-options-toggle">
                 <button class="toggle-button">
                     <span class="toggle-icon">▶</span> Advanced Options
@@ -74,21 +97,6 @@
                         Auto-progress animations
                     </label>
                 </div>
-
-                <div class="option-row">
-                    <div class="recommended-comp">
-                        <label>Recommended Composition:</label>
-                        <span class="comp-text"></span>
-                    </div>
-                </div>
-
-                <div class="option-row">
-                    <label>
-                        <input type="checkbox" id="balanced-team" disabled />
-                        Generate balanced team
-                    </label>
-                </div>
-
                 <div class="option-row">
                     <label>
                         <input type="checkbox" id="allow-exclusions" />
@@ -100,22 +108,8 @@
                         <input type="checkbox" id="allow-duplicates" checked />
                         Allow Duplicate Specs
                     </label>
-                    <div class="duplicate-warning hidden">
-                        Warning: Disabling duplicates with many players could
-                        limit variety
-                    </div>
+                    <div class="duplicate-warning hidden"></div>
                 </div>
-            </div>
-
-            <button class="roll-button">Roll Specs!</button>
-
-            <div class="results-container"></div>
-            <div class="next-roll-container" style="display: none">
-                <button class="next-roll-button">Next Roll</button>
-            </div>
-            <div class="action-buttons" style="display: none">
-                <button class="roll-again">Roll Again</button>
-                <button class="reset">Reset All</button>
             </div>
         </div>
         <script src="js/slotMachine.js"></script>

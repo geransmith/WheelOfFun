@@ -300,6 +300,13 @@ button:hover {
     margin-bottom: 0;
 }
 
+.group-comp-options {
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
 .recommended-comp {
     display: flex;
     flex-direction: column;
